@@ -1,4 +1,5 @@
 #include<stdbool.h>
+#include<stdint.h>
 
 bool isDivisible(int x, int y){
     return (x%y==0)?true:false;
@@ -16,12 +17,20 @@ bool isPrime(int n){
     if(isEven(n)&&n!=2){
         return false;
     }
-    for (int i=2;i<n;i++){
-        if (n%i==0){
+    for(int i=2;i<n;i++){
+        if(n%i==0){
             return false;
         }
     }
     return true;
+}
+
+bool isCloser(float a, float b, float c){
+    return (absolute(b-c)>absolute(b-a));
+}
+
+int firstDecimalPlace(float n){
+    return trunc((n-trunc(n))*10);
 }
 
 float absolute(float x){
@@ -42,7 +51,7 @@ int trunc(float x){
 
 int round(float x){
     float y=(x>0)?trunc(x)+0.5:trunc(x)-0.5;
-    if (x>0){
+    if(x>0){
         return (x>y)?trunc(x)+1:trunc(x);
     }
     else{
@@ -58,9 +67,9 @@ int floor(float x){
 }
 
 void makeFraction(float x, int* numerator,int* denominator){
-    for (int i=400;i>0;i--){
-        for (int j=400;j>0;j--){
-            if ((float)j/i==x||((float)j/i>x*0.999&&(float)j/i<x*1.01)){
+    for(int i=400;i>0;i--){
+        for(int j=400;j>0;j--){
+            if((float)j/i==x||((float)j/i>x*0.999&&(float)j/i<x*1.01)){
                 if(isNegative(x)){
                     *numerator=j*-1;
                     *denominator=i; 
@@ -85,7 +94,7 @@ float cb(float x){
 float power(float x, int y){
     float j=1;
     if(y>=0){
-        if (y==2){
+        if(y==2){
             j=sq(x);
             return j;
         }
@@ -111,7 +120,7 @@ float rt(float x, int y){
             return i;
         }
     }
-    for (float i=0;i<x;i+=0.001){
+    for(float i=0;i<x;i+=0.001){
         if(power(i,y)==x||power(i,y)>x*0.9995){
             return i;
         }
@@ -124,6 +133,17 @@ float sqrt(float x){
 
 float cbrt(float x){
     return rt(x,3);
+}
+
+float Qsqrt(float x){
+    int n=1;
+    for(int i=1;i<x;i++){
+        if(isCloser(i*i, x, n*n)){
+            n=i;
+        }
+    }
+    float m=x-n*n;
+    return n+(m/(2*n));
 }
 
 float pow(float x, float y){
@@ -142,7 +162,7 @@ float map(float x, float fl, float fh, float tl, float th) {
   return (x-fl)*(th-tl)/(fh-fl)+tl;
 }
 
-long int factorial(int x){
+uint64_t factorial(int x){
     if (x>1){
         return x*factorial(x-1);
     }
@@ -151,7 +171,6 @@ long int factorial(int x){
     }
 }
 
-//didn't work
 float log(float x, float y){
     for (int i=0; true; i+=0.01){
         if(pow(x,i)==y||pow(x,i)>y*0.995){
