@@ -1,6 +1,9 @@
 #include<stdbool.h>
 #include<stdint.h>
 
+#define PI 3.1415926535897932
+#define E 2.7182818284590452
+
 bool isDivisible(int x, int y){
     return (x%y==0)?true:false;
 }
@@ -31,6 +34,10 @@ bool isCloser(float a, float b, float c){
 
 int firstDecimalPlace(float n){
     return trunc((n-trunc(n))*10);
+}
+
+float avg(float a, float b){
+    return (a+b)/2;
 }
 
 float absolute(float x){
@@ -81,6 +88,14 @@ void makeFraction(float x, int* numerator,int* denominator){
             }
         }
     }
+}
+
+float fmod(float a, float b){
+    float f=a;
+    for(int i=0; f>b; i++){
+        f-=b;
+    }
+    return f;
 }
 
 float sq(float x){
@@ -177,6 +192,26 @@ float log(float x, float y){
             return i;
         }
     }
+}
+
+//trigonometric functions
+
+float sin(float theta){
+    int h;
+    float t=theta;
+    for(int h=0; t>PI; h++){
+        t-=PI;
+    }
+    int f=(isEven(h))?-1:1;
+    return (16*t*(PI-t))/((5*PI*PI)-((4*t)*(PI-t)))*f;
+}
+
+float cos(float theta){
+    return sin(theta+PI/2);
+}
+
+float tan(float theta){
+    return sin(theta)/cos(theta);
 }
 
 float hypot(float a, float b){
