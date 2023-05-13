@@ -194,6 +194,10 @@ float log(float x, float y){
     }
 }
 
+float degToRad(float deg){
+    return deg*(PI/180);
+}
+
 //trigonometric functions
 
 float sin(float theta){
@@ -206,7 +210,7 @@ float sin(float theta){
     return (16*t*(PI-t))/((5*PI*PI)-((4*t)*(PI-t)))*f;
 }
 
-float cos(float theta){
+float cos(float theta){//cos and tan sometimes change the number's sign
     return sin(theta+PI/2);
 }
 
